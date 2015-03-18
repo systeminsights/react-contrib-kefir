@@ -1,6 +1,6 @@
 {
   "name": "react-contrib-kefir",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Connect Kefir streams in React component props to component state.",
   "main": "lib/index.js",
   "scripts": {
