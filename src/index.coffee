@@ -65,9 +65,7 @@ onError = onX('Error')
 # whenever an `a` is emitted from the stream.
 #
 connectUpdate = (propName, f) ->
-  updateState = (a) ->
-    @setState((s, _) -> f(s, a))
-
+  updateState = (a) -> @setState(f(@state, a))
   onValue(propName, updateState)
 
 # :: String -> React.Mixin
