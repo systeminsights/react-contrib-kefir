@@ -1,9 +1,3 @@
-shallowCopy = (o) ->
-  c = {}
-  for own k, v of o
-    c[k] = v
-  c
-
 onX = (type) -> (propName, f) ->
   onT    = "on#{type}"
   offT   = "off#{type}"
@@ -57,12 +51,15 @@ onValue = onX('Value')
 #
 onError = onX('Error')
 
-# :: (String, (s, a) -> s) -> React.Mixin
+# :: (String, (s, a) -> s') -> React.Mixin
 #
 # Given the name of a prop of type (Kefir e a) and a stateful computation that
 # computes the next state of the component in terms of the current state and an
 # `a`, returns a Component mixin that will update the state of the component
 # whenever an `a` is emitted from the stream.
+#
+# NB: If the state value is an object, the keys not present in the
+#     updated state retain the values from the previous state.
 #
 connectUpdate = (propName, f) ->
   updateState = (a) -> @setState(f(@state, a))
@@ -84,7 +81,7 @@ connectSet = (propName) ->
 #
 connectKey = (propName, stateKey) ->
   connectUpdate(propName, (s, x) ->
-    s1 = shallowCopy(s)
+    s1 = {}
     s1[stateKey] = x
     s1)
 
